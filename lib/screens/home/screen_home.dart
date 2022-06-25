@@ -40,6 +40,7 @@ class ScreenHome extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.yellow[700],
         onPressed: (){
           if(index.value==0){
             print("add transaction");

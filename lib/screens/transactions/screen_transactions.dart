@@ -19,8 +19,12 @@ class ScreenTransactions extends StatelessWidget {
         ),
         child: ListTile(
           leading: CircleAvatar(
-            backgroundColor: Colors.blue,
-            child: Text("${index+1}"),
+            backgroundColor: Colors.green,
+            child: Text("${index+1}", 
+            style: TextStyle(
+              color: Colors.white,
+            ),
+            ),
           ),
           title: Text("1000"),
           subtitle: Text("Purpose")

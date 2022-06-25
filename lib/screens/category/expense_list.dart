@@ -21,7 +21,9 @@ class ExpenseList extends StatelessWidget {
             child: ListTile(
               title: Text(cat.name!),
               trailing: IconButton(
-                icon: Icon(Icons.delete),
+                icon: Icon(Icons.delete,
+                  color: Color.fromARGB(255, 223, 53, 41),
+              ),
                 onPressed: (){
                 },
               ),

@@ -26,10 +26,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      // set theme to dark mode,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+        colorScheme: const ColorScheme.dark(),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      title: 'Flutter Demo',
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      // ),
       home: ScreenHome(),
       routes: {
         Addnewtransaction.routeName: (ctx) => Addnewtransaction(),

@@ -7,6 +7,7 @@ import 'package:money_manager/models/category/cat_model.dart';
 import 'package:money_manager/screens/category/add_popup.dart';
 import 'package:money_manager/screens/category/screen_categories.dart';
 import 'package:money_manager/screens/home/widget/navbottom.dart';
+import 'package:money_manager/screens/transactions/addnewtransactions.dart';
 import 'package:money_manager/screens/transactions/screen_transactions.dart';
 
 class ScreenHome extends StatelessWidget {
@@ -42,6 +43,7 @@ class ScreenHome extends StatelessWidget {
         onPressed: (){
           if(index.value==0){
             print("add transaction");
+            Navigator.pushNamed(context, Addnewtransaction.routeName);
           }
           else{
             print("add category");

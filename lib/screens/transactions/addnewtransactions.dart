@@ -19,6 +19,8 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
   type_of_categories? selected;
   Catmodel? selectedcat;
 
+  String? dropdowndisplay;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -57,20 +59,28 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
                 child: DropdownButtonHideUnderline(
                   child: ButtonTheme(
                     alignedDropdown: true,
-                    child: DropdownButton(
+                    child: DropdownButton<String>(
                       hint: Text("Select Category"),
+                      value: dropdowndisplay,
                       items: (selected==type_of_categories.income 
                       ?dbcat().incomeValueslist
                       :dbcat().expenseValueslist
                       ).value.map((e){
                         return DropdownMenuItem(
                           child: Text(e.name!),
-                          value: e,
+                          value: e.id,
                         );
                       }).toList(),
                       onChanged: (newval){
                         print(newval);
+                        if(newval==null){
+                          return;
+                        }
+                        setState(() {
+                          dropdowndisplay=newval;
+                        });
                       },
+                      onTap: (){},
                     ),
                   ),
                 ),
@@ -86,6 +96,7 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
                         onChanged: <type_of_categories>(newval){
                           setState(() {
                             selected=newval;
+                            dropdowndisplay=null;
                           });
                         },
                         fillColor: MaterialStateProperty.resolveWith<Color>((states) {
@@ -106,6 +117,7 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
                         onChanged: <type_of_categories>(newval){
                           setState(() {
                             selected=newval;
+                            dropdowndisplay=null;
                           });
                         },
                         fillColor: MaterialStateProperty.resolveWith<Color>((states) {

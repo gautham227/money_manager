@@ -20,12 +20,20 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
   Catmodel? selectedcat;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    selected=type_of_categories.income;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
                 keyboardAppearance: Brightness.dark,
@@ -51,7 +59,10 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
                     alignedDropdown: true,
                     child: DropdownButton(
                       hint: Text("Select Category"),
-                      items: dbcat().expenseValueslist.value.map((e){
+                      items: (selected==type_of_categories.income 
+                      ?dbcat().incomeValueslist
+                      :dbcat().expenseValueslist
+                      ).value.map((e){
                         return DropdownMenuItem(
                           child: Text(e.name!),
                           value: e,
@@ -71,8 +82,12 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
                   Row(
                     children: [
                       Radio(value: type_of_categories.income,
-                        groupValue: type_of_categories.income,
-                        onChanged: (newval){},
+                        groupValue: selected,
+                        onChanged: <type_of_categories>(newval){
+                          setState(() {
+                            selected=newval;
+                          });
+                        },
                         fillColor: MaterialStateProperty.resolveWith<Color>((states) {
                             if (states.contains(MaterialState.disabled)) {
                               return Color.fromARGB(255, 162, 129,252);
@@ -87,8 +102,12 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
                   Row(
                     children: [
                       Radio(value: type_of_categories.expense,
-                        groupValue: type_of_categories.income,
-                        onChanged: (newval){},
+                        groupValue: selected,
+                        onChanged: <type_of_categories>(newval){
+                          setState(() {
+                            selected=newval;
+                          });
+                        },
                         fillColor: MaterialStateProperty.resolveWith<Color>((states) {
                             if (states.contains(MaterialState.disabled)) {
                               return Color.fromARGB(255, 162, 129,252);
@@ -102,6 +121,8 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
                   ),
                 ],
               ),
+
+              // SizedBox(height: 2),
 
               TextButton.icon(onPressed: () async{
                 final date= await showDatePicker(context: context,
@@ -121,9 +142,11 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
               },
                 icon: Icon(Icons.calendar_today),
                 label: Text(
-                  datereqd==null?"Select Date": (datereqd!).day.toString()+"-"+(datereqd)!.month.toString()+"-"+(datereqd!).year.toString(),
+                  datereqd==null?"Select Date": (datereqd!).day.toString()+"-"+(datereqd!).month.toString()+"-"+(datereqd!).year.toString(),
                 )
               ),
+
+            SizedBox(height: 4),
 
               ElevatedButton.icon (onPressed: (){}, icon: Icon(Icons.check, color: Colors.amber,), label: Text("Submit", style: TextStyle(color: Colors.white),)),
             ],

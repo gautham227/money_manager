@@ -3,6 +3,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:money_manager/db/category/db_cat.dart';
 import 'package:money_manager/models/category/cat_model.dart';
+import 'package:money_manager/models/transactions/trans_model.dart';
 
 class Addnewtransaction extends StatefulWidget {
   static const routeName = 'addnewtransaction';
@@ -15,10 +16,12 @@ class Addnewtransaction extends StatefulWidget {
 class _AddnewtransactionState extends State<Addnewtransaction> {
 
   // variables reqd
+  final namecontroller = TextEditingController();
+  final amountcontroller = TextEditingController();
+
   DateTime? datereqd;
   type_of_categories? selected;
   Catmodel? selectedcat;
-
   String? dropdowndisplay;
 
   @override
@@ -38,6 +41,7 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextFormField(
+                controller: namecontroller,
                 keyboardAppearance: Brightness.dark,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
@@ -45,6 +49,7 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
                 ),
               ),
               TextFormField(
+                controller: amountcontroller,
                 keyboardAppearance: Brightness.light,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
@@ -69,6 +74,9 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
                         return DropdownMenuItem(
                           child: Text(e.name!),
                           value: e.id,
+                          onTap: (){
+                            selectedcat=e;
+                          },
                         );
                       }).toList(),
                       onChanged: (newval){
@@ -160,7 +168,18 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
 
             SizedBox(height: 4),
 
-              ElevatedButton.icon (onPressed: (){}, icon: Icon(Icons.check, color: Colors.amber,), label: Text("Submit", style: TextStyle(color: Colors.white),)),
+              ElevatedButton.icon (
+                onPressed: (){},
+                icon: Icon(
+                  Icons.check, 
+                  color: Colors.amber,
+                ),
+                label: Text("Submit", 
+                  style: TextStyle(
+                    color: Colors.white
+                  ),
+                )
+              ),
             ],
           ),
         ),
@@ -168,4 +187,27 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
 
     );
   }
+
+  Future<void> newtransaction() async{
+    final transacname_val=namecontroller.text;
+    final ret_amt_val=amountcontroller.text;
+    if(transacname_val==null || ret_amt_val==null || dropdowndisplay==null || datereqd==null || selectedcat==null){
+      return;
+    }
+
+    double? amt_val=double.tryParse(ret_amt_val);
+    if(amt_val==null){
+      return;
+    }
+
+    Transmod transmodel=Transmod(
+      purpose: transacname_val,
+      amount: amt_val,
+      category: selectedcat!,
+      date: datereqd!,
+      type: selected!,
+    );
+
+  }
+
 }

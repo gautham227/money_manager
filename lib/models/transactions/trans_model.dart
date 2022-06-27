@@ -16,6 +16,8 @@ class Transmod{
   final DateTime date;
   @HiveField(4)
   final Catmodel category;
+  @HiveField(5)
+  String? id;
   
   Transmod({
     required this.purpose,
@@ -23,5 +25,7 @@ class Transmod{
     required this.type,
     required this.date,
     required this.category,
-  });
+  }){
+    id=DateTime.now().millisecondsSinceEpoch.toString();
+  }
 }

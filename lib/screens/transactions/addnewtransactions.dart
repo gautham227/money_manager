@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:money_manager/db/category/db_cat.dart';
+import 'package:money_manager/db/transactions/db_trans.dart';
 import 'package:money_manager/models/category/cat_model.dart';
 import 'package:money_manager/models/transactions/trans_model.dart';
 
@@ -207,6 +208,8 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
       date: datereqd!,
       type: selected!,
     );
+
+    await dbtransac().addnewtransaction(transmodel);
 
   }
 

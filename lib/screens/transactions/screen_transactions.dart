@@ -1,7 +1,9 @@
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:money_manager/db/category/db_cat.dart';
 import 'package:money_manager/db/transactions/db_trans.dart';
+import 'package:money_manager/models/category/cat_model.dart';
 import 'package:money_manager/models/transactions/trans_model.dart';
 
 class ScreenTransactions extends StatelessWidget {
@@ -10,6 +12,7 @@ class ScreenTransactions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     dbtransac().loadagainTransac();
+    dbcat().loadagain();
     return ValueListenableBuilder(
       valueListenable: dbtransac().notifier,
       builder: (BuildContext ctx, List<Transmod> list, Widget? _){
@@ -25,8 +28,9 @@ class ScreenTransactions extends StatelessWidget {
             ),
             child: ListTile(
               leading: CircleAvatar(
-                backgroundColor: Colors.green,
-                child: Text("${index+1}", 
+                radius: 30,
+                backgroundColor: val.type==type_of_categories.income?Colors.green:Colors.red,
+                child: Text(getdate(val.date), 
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -46,6 +50,9 @@ class ScreenTransactions extends StatelessWidget {
       );
   }
 
-  
+  String getdate(DateTime date){
+    List<String> months=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return "${date.day}th\n${months[date.month-1]}";
+  }
 
 }

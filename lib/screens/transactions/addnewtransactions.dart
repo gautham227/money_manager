@@ -213,7 +213,7 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
 
     await dbtransac.instance.addnewtransaction(transmodel);
     Navigator.of(context).pop();
-
+    dbtransac().loadagainTransac();
   }
 
 }

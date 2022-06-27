@@ -30,6 +30,7 @@ class dbtransac implements Transacmodfns{
 
   Future<void> loadagainTransac() async{
     final dbtransac= await getdata();
+    dbtransac.sort((a,b)=>b.date.compareTo(a.date));
     notifier.value.clear();
     notifier.value.addAll(dbtransac);
     notifier.notifyListeners();

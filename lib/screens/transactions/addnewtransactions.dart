@@ -170,7 +170,9 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
             SizedBox(height: 4),
 
               ElevatedButton.icon (
-                onPressed: (){},
+                onPressed: (){
+                  newtransaction();
+                },
                 icon: Icon(
                   Icons.check, 
                   color: Colors.amber,
@@ -209,7 +211,8 @@ class _AddnewtransactionState extends State<Addnewtransaction> {
       type: selected!,
     );
 
-    await dbtransac().addnewtransaction(transmodel);
+    await dbtransac.instance.addnewtransaction(transmodel);
+    Navigator.of(context).pop();
 
   }
 

@@ -20,7 +20,7 @@ class HomeBottomNav extends StatelessWidget {
           onTap: (value){
             ScreenHome.index.value=value;
           },
-      
+          selectedItemColor: Colors.amber,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),

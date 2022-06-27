@@ -7,6 +7,7 @@ const name_db="dbtransac";
 abstract class Transacmodfns {
   Future <void> addnewtransaction (Transmod ele);
   Future <List<Transmod>> getdata();
+  Future<void> transacdel(String id);
 }
 
 class dbtransac implements Transacmodfns{
@@ -40,5 +41,15 @@ class dbtransac implements Transacmodfns{
   Future<List<Transmod>> getdata() async{
     final dbtransac=await Hive.openBox<Transmod>(name_db);
     return dbtransac.values.toList();
+  }
+  
+  @override
+  Future<void> transacdel(String id) async{
+    // TODO: implement transacsel'
+    print("del");
+    final dbtransac=await Hive.openBox<Transmod>(name_db);
+    await dbtransac.delete(id);
+    loadagainTransac();
+    // throw UnimplementedError();
   }
 }

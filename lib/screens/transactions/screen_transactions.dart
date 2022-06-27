@@ -1,6 +1,8 @@
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:money_manager/db/category/db_cat.dart';
 import 'package:money_manager/db/transactions/db_trans.dart';
 import 'package:money_manager/models/category/cat_model.dart';
@@ -20,24 +22,33 @@ class ScreenTransactions extends StatelessWidget {
         return ListView.separated(
         itemBuilder: (ctx, index){
           final val=list[index];
-          return Card(
-            shadowColor: Colors.grey[500],
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+          return Slidable(
+            key: Key(val.id!),
+            startActionPane: ActionPane(
+              motion: ScrollMotion(),
+              children: [
+                SlidableAction(onPressed: (ctx){dbtransac.instance.transacdel(val.id!);}, icon: Icons.delete, label: "Delete",)
+              ],
             ),
-            child: ListTile(
-              leading: CircleAvatar(
-                radius: 30,
-                backgroundColor: val.type==type_of_categories.income?Colors.green:Colors.red,
-                child: Text(getdate(val.date), 
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                ),
+            child: Card(
+              shadowColor: Colors.grey[500],
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
               ),
-              title: Text("Rs ${val.amount}"),
-              subtitle: Text("${val.category.name}"),
+              child: ListTile(
+                leading: CircleAvatar(
+                  radius: 30,
+                  backgroundColor: val.type==type_of_categories.income?Colors.green:Colors.red,
+                  child: Text(getdate(val.date), 
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                  ),
+                ),
+                title: Text("Rs ${val.amount}"),
+                subtitle: Text("${val.category.name}"),
+              ),
             ),
           );
         }, 
@@ -51,8 +62,9 @@ class ScreenTransactions extends StatelessWidget {
   }
 
   String getdate(DateTime date){
-    List<String> months=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return "${date.day}th\n${months[date.month-1]}";
+    // List<String> months=["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    // return "${date.day}th\n${months[date.month-1]}";
+    return DateFormat.MMMd().format(date);
   }
 
 }

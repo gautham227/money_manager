@@ -25,6 +25,7 @@ class ExpenseList extends StatelessWidget {
                   color: Color.fromARGB(255, 223, 53, 41),
               ),
                 onPressed: (){
+                  dbcat().deletecat(cat.id!);
                 },
               ),
             )
